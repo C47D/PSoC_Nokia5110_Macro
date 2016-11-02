@@ -2,6 +2,7 @@
 
 #Ignore Archive directory, bundles there
 Archive/*
+Backup/*
 
 #User specific files
 ComponentUpdateLog.txt
@@ -12,6 +13,12 @@ ComponentUpdateLog.txt
 *.cydsn/codegentemp/
 *.cydsn/Generated_Source/
 *.cydsn/Export/
+*.cydsn/Export/
+*.cydsn/*.cycdx
+*.cydsn/*.cyfit
+*.cydsn/*.rpt
+*.cydsn/*.svd
+*.cydsn/*.html
 
 #PSoC 5LP based projects
 *.cydsn/CortexM3/
