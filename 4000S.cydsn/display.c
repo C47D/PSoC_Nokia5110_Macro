@@ -158,7 +158,7 @@ void NOKIA_Chr(char ch, DRAW_TYPE_t dtype, FONT_TYPE_t ft){
         }
         NOKIA_SendData(Background[Background_cursor]); // empty space after character 
     break;
-    default:// Default Middle font
+    case Middle_Font: default:// Default Middle font
         if(dtype == DRAW_OR){  
             for(i = 0; i < 5; i++, Background_cursor++){
                 NOKIA_SendData(MiddleFont[ch-32][i] | Background[Background_cursor]);
@@ -187,7 +187,7 @@ void NOKIA_Chr(char ch, FONT_TYPE_t ft){
         }
         NOKIA_SendData(0x00);
     break;
-    default: // Default Middle font
+    case Middle_Font: default: // Default Middle font
         for(i = 0; i < 5; i++){
             NOKIA_SendData(MiddleFont[ch - 32][i]);// empty space after character
         }
@@ -206,11 +206,12 @@ void NOKIA_Chr(char ch, FONT_TYPE_t ft){
 * Return value : None.
 ***************************************************************************/
 #ifdef DRAW_OVER_BACKGROUND
-void NOKIA_Str(char* dataPtr, DRAW_TYPE_t dtype, FONT_TYPE_t ft){
+void NOKIA_Str(const char* dataPtr, DRAW_TYPE_t dtype, FONT_TYPE_t ft){
     uint16_t i;
+    char ch;
 
     while(*dataPtr){
-        char ch = *dataPtr++; 
+        ch = *dataPtr++; 
         switch(ft){
         case Small_Font: // Small font
             if (dtype == DRAW_OR){
@@ -228,7 +229,7 @@ void NOKIA_Str(char* dataPtr, DRAW_TYPE_t dtype, FONT_TYPE_t ft){
             }
             NOKIA_SendData(Background[Background_cursor++]);
         break;
-        default: //Default font Middle
+        case Middle_Font: default: //Default font Middle
             if(dtype == DRAW_OR){
                 for(i = 0; i < 5; i++, Background_cursor++){
                     NOKIA_SendData(MiddleFont[ch-32][i] | Background[Background_cursor]);
@@ -248,20 +249,21 @@ void NOKIA_Str(char* dataPtr, DRAW_TYPE_t dtype, FONT_TYPE_t ft){
     }
 }
 #else //DRAW_OVER_BACKGROUND
-void NOKIA_Str(char* dataPtr, FONT_TYPE_t ftype){
+void NOKIA_Str(const char* dataPtr, FONT_TYPE_t ftype){
     uint16_t i;
+    char ch;
 
     while(*dataPtr){
-        char ch = *dataPtr++; 
+        ch = *dataPtr++; 
         switch(ftype){
         case Small_Font: // Small font
-            char ch = *dataPtr++; 
+            ch = *dataPtr++; 
             for(i = 0; i < 5; i++){
                 NOKIA_SendData(FontLookup[ch - 32][i]);
             }
             NOKIA_SendData(0x00); // empty space after character
-        default: // Default Middle font
-            char ch = *dataPtr++; 
+        case Middle_Font: default: // Default Middle font
+            ch = *dataPtr++; 
             for(i = 0; i < 5; i++){
                 NOKIA_SendData(FontLookup[ch - 32][i]);
             }
@@ -342,7 +344,7 @@ void NOKIA_BigStr(uint8_t x, uint8_t y, char* dataPtr){
     while(*dataPtrVar){
         ch = *dataPtrVar++; 
         for(i = 0; i < 8; i++){
-            NOKIA_SendData(BigFontLookup[ch - 32][i][0]);
+            NOKIA_SendData(BigFont[ch - 32][i][0]);
         }
         NOKIA_SendData(0x00);
     }
@@ -352,7 +354,7 @@ void NOKIA_BigStr(uint8_t x, uint8_t y, char* dataPtr){
     while(*dataPtrVar){        
         ch = *dataPtrVar++; 
         for(i = 0; i < 8; i++){
-            NOKIA_SendData(BigFontLookup[ch - 32][i][1]);
+            NOKIA_SendData(BigFont[ch - 32][i][1]);
         }
         NOKIA_SendData(0x00);
     }
