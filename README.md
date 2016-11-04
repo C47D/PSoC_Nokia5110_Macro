@@ -6,7 +6,9 @@ PSoC 4S and Analog Coprocessor doesn't have UDBs so i can't use Control Register
 
 Internal driver of the Nokia5110 display works at 4MHz so SPI must work at that freq. aswell.
 
-I removed the MISO line on both projects, the NOKIA 5110 display doesn't need it, but if you want to use it enable it on the SCB customizer.
+The MISO line is removed on both projects, the NOKIA 5110 display doesn't need it, but if you want to use it enable it on the SCB customizer.
+
+Based on a old PSoC 1 AppNote [AN2152](http://www.cypress.com/documentation/application-notes/an2152-psoc-1-graphics-lcd-and-psoc-interface).
 
 Improvements are welcome.
 
